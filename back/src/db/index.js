@@ -9,15 +9,15 @@ const DB_URL =
 // const db = mongoose.connection;
 
 //종훈님 계정
-// mongoose.connect(
-//   `mongodb+srv://${process.env.DB_ID}:${process.env.DB_PASSWORD}@cluster0.cnmeavp.mongodb.net/?retryWrites=true&w=majority`,
-//   { useNewUrlParser: true, useUnifiedTopology: true }
-// );
-
 mongoose.connect(
-  `mongodb+srv://${process.env.DB_ID}:${process.env.DB_PASSWORD}@cluster0.2apfxc0.mongodb.net/?retryWrites=true&w=majority`,
+  `mongodb+srv://${process.env.DB_ID}:${process.env.DB_PASSWORD}@${DB_URL}/?retryWrites=true&w=majority`,
   { useNewUrlParser: true, useUnifiedTopology: true }
 );
+
+// mongoose.connect(
+//   `mongodb+srv://${process.env.DB_ID}:${process.env.DB_PASSWORD}@cluster0.2apfxc0.mongodb.net/?retryWrites=true&w=majority`,
+//   { useNewUrlParser: true, useUnifiedTopology: true }
+// );
 const db = mongoose.connection;
 
 db.on("connected", () =>
