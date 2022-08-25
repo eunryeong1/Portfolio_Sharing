@@ -18,7 +18,8 @@ function EduEditForm({ edu, setIsEditing, setEdu }) {
       school,
       major,
       degree
-    });}catch (err) {
+    });
+    }catch (err) {
       console.log("편집에 실패하였습니다.", err);
     }
     // edu 정보는 response의 data임.
