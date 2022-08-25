@@ -5,10 +5,8 @@ import { Container, Col, Row } from "react-bootstrap";
 import { UserStateContext } from "../App";
 import * as Api from "../api";
 import User from "./user/User";
-<<<<<<< HEAD
-=======
 import Edu from "./education/Educations";
->>>>>>> 8e81d15 (Education MVP with apiMock)
+
 
 function Portfolio() {
   const navigate = useNavigate();
@@ -65,17 +63,15 @@ function Portfolio() {
           />
         </Col>
         <Col>
-<<<<<<< HEAD
 
           <div style={{ textAlign: "center" }}>
             학력 목록, 수상이력 목록, 프로젝트 목록, 자격증 목록 만들기
           </div>
 
-=======
           <Edu
           portfolioOwnerId={portfolioOwner.id}
           isEditable={portfolioOwner.id === userState.user?.id}/>
->>>>>>> 8e81d15 (Education MVP with apiMock)
+
         </Col>
       </Row>
     </Container>

@@ -13,12 +13,14 @@ function EduEditForm({ edu, setIsEditing, setEdu }) {
     e.preventDefault();
     
     const user_id = edu.user_id;
-    await Api.put(`educations/${edu.id}`, {
+    try{await Api.put(`educations/${edu.id}`, {
       user_id,
       school,
       major,
       degree
-    });
+    });}catch (err) {
+      console.log("편집에 실패하였습니다.", err);
+    }
     // edu 정보는 response의 data임.
     const res = await Api.get("educationlist", user_id);
 
