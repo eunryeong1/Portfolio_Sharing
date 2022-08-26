@@ -37,6 +37,12 @@ const eduMock = {
   position: "학적" 
 }
 
+const awardMock = {
+id: "abcde-1234567",
+title: "수상내역",
+description: "상세내역"
+}
+
 const certificateMock = {
 id: "abcde-12345678",
 title: "자격증내역",
@@ -44,16 +50,25 @@ description: "상세내역",
 when_date: new Date().toISOString().split("T")[0]
 }
 
+const projectMock = {
+id: "abcde-123456789",
+title: "프로젝트내역",
+description: "상세내역",
+from_date: new Date().toISOString().split("T")[0],
+to_date: new Date().toISOString().split("T")[0]
+}
 
 let userlist = [userMock1, userMock2, userMock3, userMock4, userMock5]
 
 let educationlist = [eduMock]
 
+let awardlist = [awardMock]
+
 let certificatelist = [certificateMock]
 
+let projectlist = [projectMock]
 
-
-async function get(endpoint, params = "") {
+async function get(endpoint, params) {
 console.log(
   `%cGET 요청 ${"/" + endpoint + "/" + params}`,
   "color: #a25cd1;"
@@ -76,10 +91,21 @@ if (endpoint === "educations") {
 
 
 if (endpoint === "educationlist") {
-  const data = educationlist
+  const data = educationlist.filter((edu)=>edu.user_id===params)
   return {data}
 }
 
+// award get
+if (endpoint === "awards") {
+  const matchingAward = awardlist.find(award => award.id === params)
+  return {data: matchingAward}
+}
+
+
+if (endpoint === "awardlist") {
+  const data = awardlist.filter((award)=>award.user_id===params)
+  return {data}
+}
 
 // certificate get
 if (endpoint === "certificates") {
@@ -89,9 +115,22 @@ if (endpoint === "certificates") {
 
 
 if (endpoint === "certificatelist") {
-  const data = certificatelist
+  const data = certificatelist.filter((certi)=>certi.user_id === params)
   return {data}
 }
+
+// project get
+if (endpoint === "projects") {
+  const matchingProject = projectlist.find(project => project.id === params)
+  return {data: matchingProject}
+}
+
+if (endpoint === "projectlist") {
+  const data = projectlist.filter((project)=>project.user_id === params)
+  return {data}
+}
+
+
 
 return 
 }
@@ -121,30 +160,32 @@ if (endpoint === "user/login") {
 }
 
 if (endpoint === "education/create") {
-  const newUser = {...data}
-  newUser.description = "설명이 없습니다. 설명을 추가해주세요."
-  const random = Math.random()
-  newUser.id = `abcde-${random}`
-
-  educationlist.push(newUser)
-  return {data: newUser}
+  const newEduContent = {...data}
+  educationlist.push(newEduContent)
+  return {data: newEduContent}
 }
 
+if (endpoint === "award/create") {
+  const newAwardContent = {...data}
+  awardlist.push(newAwardContent)
+  return {data: newAwardContent}
+}
 
 if (endpoint === "certificate/create") {
-  const newUser = {...data}
-  newUser.description = "설명이 없습니다. 설명을 추가해주세요."
-  const random = Math.random()
-  newUser.id = `abcde-${random}`
-
-  certificatelist.push(newUser)
-  return {data: newUser}
+  const newCertiContent = {...data}
+  certificatelist.push(newCertiContent)
+  return {data: newCertiContent}
 }
 
+if (endpoint === "project/create") {
+  const newProjectContent = {...data}
+  projectlist.push(newProjectContent)
+  return {data: newProjectContent}
+}
 return 
 }
 
-// put
+//put
 async function put(endpoint, data) {
 
 console.log(
@@ -157,14 +198,16 @@ const userId = urlAndId[1]
 data.id = userId
 userlist = userlist.filter(user => user.id !== userId)
 userlist.push(data)
-educationlist = educationlist.filter(user => user.id !== userId)
-educationlist.push(data)
-certificatelist = certificatelist.filter(user => user.id !== userId)
-certificatelist.push(data)
+
+// educationlist.push(data)
+// awardlist.push(data)
+// certificatelist.push(data)
+// projectlist.push(data)
 
 const response = {data}
 return response
 }
+
 
 
 // 아래처럼 export한 후, import * as A 방식으로 가져오면,
