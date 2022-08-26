@@ -21,9 +21,9 @@ const CertificateSchema = new Schema(
       required: true,
     },
     certiDate: {
-      //   type: String,
+        type: String,
       //   format: Date,
-      type: Date,
+      // type: Date,
       required: true,
     },
   },
