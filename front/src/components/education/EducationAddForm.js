@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import { Button, Form, Col, Row } from "react-bootstrap";
+<<<<<<< HEAD
 import * as Api from "../../apiMock";
+=======
+import * as Api from "../../api";
+>>>>>>> 03ad744f4c5c72f20a0bf234c173a5cf08dd476f
 //get:조회 post:등록 put:수정
 function EducationAddForm({ portfolioOwnerId, setIsAdding, setEdu }) {
   const [school, setSchool] = useState("");
@@ -10,6 +14,7 @@ function EducationAddForm({ portfolioOwnerId, setIsAdding, setEdu }) {
   const handleSubmit = async (e) => {
     // preventDefault 해주기
     e.preventDefault();
+<<<<<<< HEAD
     const user_id=portfolioOwnerId;
     try {
       await Api.post("education/register", {
@@ -17,12 +22,26 @@ function EducationAddForm({ portfolioOwnerId, setIsAdding, setEdu }) {
         school,
         major,
         degree,
+=======
+    const id=portfolioOwnerId;  //로그인된 사용자 id
+    try {
+      await Api.post("edu/add", {
+        id,
+        school,
+        major,
+        degree,
+       
+>>>>>>> 03ad744f4c5c72f20a0bf234c173a5cf08dd476f
       });
     } catch (err) {
       console.log("등록에 실패하였습니다.", err);
     }
     
+<<<<<<< HEAD
     const res = await Api.get("educationlist",user_id);
+=======
+    const res = await Api.get("edu");
+>>>>>>> 03ad744f4c5c72f20a0bf234c173a5cf08dd476f
     setEdu(res.data);
     setIsAdding(false);
   };

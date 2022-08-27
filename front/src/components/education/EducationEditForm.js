@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import { Button, Form, Col, Row } from "react-bootstrap";
+<<<<<<< HEAD
 import * as Api from "../../apiMock";
+=======
+import * as Api from "../../api";
+>>>>>>> 03ad744f4c5c72f20a0bf234c173a5cf08dd476f
 
 function EduEditForm({ edu, setIsEditing, setEdu }) {
   
@@ -12,6 +16,7 @@ function EduEditForm({ edu, setIsEditing, setEdu }) {
     // preventDefault 해주기
     e.preventDefault();
     
+<<<<<<< HEAD
     const user_id = edu.user_id;
     try{await Api.put(`educations/${edu.id}`, {
       user_id,
@@ -24,6 +29,20 @@ function EduEditForm({ edu, setIsEditing, setEdu }) {
     }
     // edu 정보는 response의 data임.
     const res = await Api.get("educationlist", user_id);
+=======
+    const id = edu.id;  //id는 사용자 id
+    try{
+    await Api.put(`edu/${edu.edu_id}/update`, {    ///users/:id/edu/:edu_id/update
+      id,
+      school,
+      major,
+      degree
+    });}catch(err){
+      console.log("편집에 실패하였습니다.", err);
+    }
+    // edu 정보는 response의 data임.
+    const res = await Api.get("edu");
+>>>>>>> 03ad744f4c5c72f20a0bf234c173a5cf08dd476f
 
     // 해당 edu 정보로 edu을 세팅함.
     setEdu(res.data);

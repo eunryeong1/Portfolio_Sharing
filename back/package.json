@@ -36,7 +36,11 @@
     "@babel/plugin-transform-runtime": "^7.17.0",
     "@babel/preset-env": "^7.16.4",
     "dotenv": "^16.0.0",
+<<<<<<< HEAD
     "nodemon": "^2.0.15"
+=======
+    "nodemon": "^2.0.19"
+>>>>>>> 03ad744f4c5c72f20a0bf234c173a5cf08dd476f
   },
   "jest": {
     "testEnvironment": "node",
