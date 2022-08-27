@@ -30,7 +30,7 @@ function ProjectAddForm({ portfolioOwnerId, setProjects, setIsAdding }) {
     }
 
    
-    const res = await Api.get("project");
+    const res = await Api.get("project",id);
     
     setProjects(res.data);
     setIsAdding(false);

@@ -68,11 +68,11 @@ certificateRouter.put(
 
 // 현재 사용자의 Education 정보 가져오기
 certificateRouter.get(
-  "/certi",
+  "/certi/:user_id",
   login_required,
   async function (req, res, next) {
     try {
-      const user_id = req.currentUserId;
+      const user_id = req.params.user_id;
       const currentCertiInfo = await certiService.getCertiInfo({ user_id });
 
       res.status(200).send(currentCertiInfo);

@@ -64,11 +64,11 @@ educationRouter.put(
 
 // 현재 사용자의 Education 정보 가져오기
 educationRouter.get(
-  "/edu",
+  "/edu/:user_id",
   login_required,
   async function (req, res, next) {
     try {
-      const user_id = req.currentUserId;
+      const user_id = req.params.user_id;
       const currentEduInfo = await eduService.getEduInfo({ user_id });
       
       res.status(200).send(currentEduInfo);

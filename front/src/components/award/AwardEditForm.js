@@ -22,7 +22,7 @@ function AwardEditForm({ currentAward, setAwards, setIsEditing }) {
     });
 
    
-    const res = await Api.get("award");
+    const res = await Api.get("award",id);
     
     setAwards(res.data);
     setIsEditing(false);

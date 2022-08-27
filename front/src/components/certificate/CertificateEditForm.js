@@ -21,7 +21,7 @@ function CertiEditForm({ currentcertificate, setIsEditing, setCertificates }) {
       certiDate,
     });
     
-    const res = await Api.get("certi");
+    const res = await Api.get("certi",id);
     setCertificates(res.data);
     setIsEditing(false);
   };

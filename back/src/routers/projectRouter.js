@@ -69,11 +69,11 @@ projectRouter.put(
 
 // 현재 사용자의 project 정보 가져오기
 projectRouter.get(
-  "/project",
+  "/project/:user_id",
   login_required,
   async function (req, res, next) {
     try {
-      const user_id = req.currentUserId;
+      const user_id = req.params.user_id;
       const currentProjectInfo = await projectService.getProjectInfo({ user_id });
 
       res.status(200).send(currentProjectInfo);

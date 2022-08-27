@@ -9,11 +9,7 @@ function AwardAddForm({ portfolioOwnerId, setAwards, setIsAdding }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-  
     const id = portfolioOwnerId;
-
-    
     try {
     await Api.post("award/add", {
       id,
@@ -24,8 +20,7 @@ function AwardAddForm({ portfolioOwnerId, setAwards, setIsAdding }) {
         console.log("등록에 실패하였습니다.", err);
     }
 
-    
-    const res = await Api.get("award");
+    const res = await Api.get("award",id);
     
     setAwards(res.data);
     setIsAdding(false);

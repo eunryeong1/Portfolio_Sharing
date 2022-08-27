@@ -25,7 +25,7 @@ function CertifiAddForm({ portfolioOwnerId, setIsAdding, setCertificates }) {
       console.log("등록에 실패하였습니다.", err);
     }
     
-    const res = await Api.get("certi");
+    const res = await Api.get("certi",id);
     setCertificates(res.data);
     setIsAdding(false);
   };
