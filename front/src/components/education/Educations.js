@@ -7,8 +7,15 @@ import EducationAddForm from "./EducationAddForm";
 function Educations({portfolioOwnerId,isEditable }) {
   
   const [educations, setEducations] = useState([]);
+  //useState로 isAdding 상태를 생성함.
   const [isAdding, setIsAdding] = useState(false);
-
+  //delete education
+  const handleRemove=(id)=>{
+    const removeItem = educations.filter((education)=>{
+      return education.id!==id;
+    })
+    setEducations(removeItem);
+  }
   useEffect(() => {
     // "`users/${portfolioOwnerId}/edu`"로 GET
     Api.get("edu",portfolioOwnerId).then((res) =>
@@ -22,12 +29,21 @@ function Educations({portfolioOwnerId,isEditable }) {
       <Card.Body>
         <Card.Title>학력</Card.Title>
         {educations.map((education) => (
+          <>
+          <Row className="mb-3">
+          <Col xl={11}>
           <Education
             key={education.edu_id}
             edu={education}
             isEditable={isEditable}
             setEdu={setEducations}
           />
+          </Col>
+          <Col xl={1}>
+          <Button variant="outline-danger" onClick={()=>handleRemove(education.id)}>삭제</Button>
+          </Col>
+          </Row>
+          </>
         ))}
         {isEditable && (
           <Row className="mt-3 mb-3 text-center" >
