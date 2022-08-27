@@ -10,12 +10,12 @@ function Educations({portfolioOwnerId,isEditable }) {
   //useState로 isAdding 상태를 생성함.
   const [isAdding, setIsAdding] = useState(false);
   //delete education
-  const handleRemove=(id)=>{
-    const removeItem = educations.filter((education)=>{
-      return education.id!==id;
-    })
-    setEducations(removeItem);
-  }
+  // const handleRemove=(id)=>{
+  //   const removeItem = educations.filter((education)=>{
+  //     return education.id!==id;
+  //   })
+  //   setEducations(removeItem);
+  // }
   useEffect(() => {
     // "`users/${portfolioOwnerId}/edu`"로 GET
     Api.get("edu",portfolioOwnerId).then((res) =>
@@ -40,7 +40,7 @@ function Educations({portfolioOwnerId,isEditable }) {
           />
           </Col>
           <Col xl={1}>
-          <Button variant="outline-danger" onClick={()=>handleRemove(education.id)}>삭제</Button>
+          {/* <Button variant="outline-danger" onClick={()=>handleRemove(education.id)}>삭제</Button> */}
           </Col>
           </Row>
           </>
