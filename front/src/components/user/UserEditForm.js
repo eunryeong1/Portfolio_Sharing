@@ -9,7 +9,7 @@ function UserEditForm({ user, setIsEditing, setUser }) {
   const [email, setEmail] = useState(user.email);
   //useState로 description 상태를 생성함.
   const [description, setDescription] = useState(user.description);
-
+  // const [uploadstate,setUploadState]=useState(false)
   //useState로 profileImageUrl 상태를 생성함
   const [profileImageFilename, setprofileImageFilename] = useState(user.profileImageFilename);
 
@@ -18,6 +18,8 @@ function UserEditForm({ user, setIsEditing, setUser }) {
     formData.append('file', e.target.files[0]);
     const res = await Api.upload('user/profile', `${user.id}`, formData);
     const impageUpload = await res;
+    //여기서는 잘 받아짐
+    console.log(res)
     setprofileImageFilename(impageUpload);
   }
 
@@ -35,6 +37,8 @@ function UserEditForm({ user, setIsEditing, setUser }) {
     });
     // 유저 정보는 response의 data임.
     const updatedUser = res.data;
+    //res.data에 profileImageFilename이 null값으로 나옴
+    console.log(res.data)
     // 해당 유저 정보로 user을 세팅함.
     setUser(updatedUser);
 
@@ -46,18 +50,26 @@ function UserEditForm({ user, setIsEditing, setUser }) {
     <Card className="mb-2">
       <Card.Body>
         <Form onSubmit={handleSubmit}>
+        { profileImageFilename ?
           <Card.Img
             style={{ width: "10rem", height: "8rem" }}
             className="mb-3"
             src={`${profileImageFilename}`}
             alt="사용자 등록 프로필 이미지"
-          />
+          />:
+          <Card.Img
+              style={{ width: "10rem", height: "8rem" }}
+              className="mb-3"
+              src="http://placekitten.com/200/200"
+              alt="랜덤 고양이 사진 (http://placekitten.com API 사용)"
+            />
+        }
           <Form.Group controlId="userEditProfileImage" className="mb-3">
             <Form.Control
               type="file"
               name="file"
               method="post"
-              enctype="multipart/form-data"
+              encType="multipart/form-data"
               onChange={(e) => upload(e)}
             />
           </Form.Group>
