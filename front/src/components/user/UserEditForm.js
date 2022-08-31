@@ -10,6 +10,19 @@ function UserEditForm({ user, setIsEditing, setUser }) {
   //useState로 description 상태를 생성함.
   const [description, setDescription] = useState(user.description);
 
+  //useState로 profileImageUrl 상태를 생성함
+  const [profileImageFilename, setprofileImageFilename] = useState(user.profileImageFilename);
+
+  const upload = async (e) => {
+    const formData = new FormData();
+    formData.append('file', e.target.files[0]);
+    const res = await Api.upload('user/profile', `${user.id}`, formData);
+    const impageUpload = await res;
+    setprofileImageFilename(impageUpload);
+  }
+
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -18,6 +31,7 @@ function UserEditForm({ user, setIsEditing, setUser }) {
       name,
       email,
       description,
+      profileImageFilename,
     });
     // 유저 정보는 response의 data임.
     const updatedUser = res.data;
@@ -32,6 +46,22 @@ function UserEditForm({ user, setIsEditing, setUser }) {
     <Card className="mb-2">
       <Card.Body>
         <Form onSubmit={handleSubmit}>
+          <Card.Img
+            style={{ width: "10rem", height: "8rem" }}
+            className="mb-3"
+            src={`${profileImageFilename}`}
+            alt="사용자 등록 프로필 이미지"
+          />
+          <Form.Group controlId="userEditProfileImage" className="mb-3">
+            <Form.Control
+              type="file"
+              name="file"
+              method="post"
+              enctype="multipart/form-data"
+              onChange={(e) => upload(e)}
+            />
+          </Form.Group>
+
           <Form.Group controlId="useEditName" className="mb-3">
             <Form.Control
               type="text"

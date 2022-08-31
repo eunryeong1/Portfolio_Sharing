@@ -3,7 +3,33 @@ import { Router } from "express";
 import { login_required } from "../middlewares/login_required";
 import { userAuthService } from "../services/userService";
 
+import { upload } from "../middlewares/imageUpload";
+
 const userAuthRouter = Router();
+
+userAuthRouter.post(
+  "/user/profile/:id",
+  upload.single('file'),
+  async function (req, res, next) {
+    try {
+      const profileImageFilename = req.file.filename;
+      res.status(200).json(profileImageFilename)
+    } catch (e){
+      next(e);
+    }}
+  );
+
+  // userAuthRouter.post("/user/upload/:id", upload.single('file'), (req, res, next) => {
+  //   try {
+  //     res.status(201).json(true);
+  //   } catch (e) {
+  //     next(e);
+  //   }
+  // });
+  
+
+
+
 
 userAuthRouter.post("/user/register", async function (req, res, next) {
   try {
@@ -103,7 +129,9 @@ userAuthRouter.put(
       const password = req.body.password ?? null;
       const description = req.body.description ?? null;
 
-      const toUpdate = { name, email, password, description };
+      const profileImageUrl = req.body.profileImageUrl ?? null;
+
+      const toUpdate = { name, email, password, description, profileImageUrl };
 
       // 해당 사용자 아이디로 사용자 정보를 db에서 찾아 업데이트함. 업데이트 요소가 없을 시 생략함
       const updatedUser = await userAuthService.setUser({ user_id, toUpdate });

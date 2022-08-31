@@ -29,6 +29,7 @@ app.use(educationRouter);
 app.use(projectRouter);
 app.use(certificateRouter);
 app.use(awardRouter);
+app.use('/uploads', express.static('uploads'));
 
 // 순서 중요 (router 에서 next() 시 아래의 에러 핸들링  middleware로 전달됨)
 app.use(errorMiddleware);
