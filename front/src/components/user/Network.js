@@ -20,18 +20,6 @@ import UserCard from "./UserCard";
 import { UserStateContext } from "../../App";
 import UserTable from "./UserTable";
 import "./Network.css";
-import styled from "styled-components"
-
-const Text = styled.p`
-  width: 100%;
-  font-weight: bold;
-  font-size: 15px;
-  line-height: 18px;
-  color: #151618;
-  box-shadow: inset 0px -1px 0px #e1e2e4;
-  padding: 12px 0;
-  margin-bottom: 12px;
-`;
 
 function Network() {
   const navigate = useNavigate();
@@ -51,10 +39,6 @@ function Network() {
     Api.get("userlist").then((res) => setUsers(res.data));
   }, [userState, navigate]);
 
-
-
-  
-
   function toggleShow() {
     setShowCard(!showCard);
   }
@@ -72,9 +56,8 @@ function Network() {
     );
     setUsers(newUserNameArray);
   }
-  // 전체 개수 구현
   function CardCount({count}) {
-    return <Text>전체 {count}개</Text>
+    return <p className="Text">전체 {count}개</p>
   }
 
   useEffect(() => {
