@@ -12,18 +12,21 @@ function UserEditForm({ user, setIsEditing, setUser }) {
   // const [uploadstate,setUploadState]=useState(false)
   //useState로 profileImageUrl 상태를 생성함
   const [profileImageFilename, setprofileImageFilename] = useState(user.profileImageFilename);
+  //파일 미리볼 url을 저장해줄 state
+  const [fileprevImage, setFileprevImage] = useState("");
+ // 파일 정보 저장
+  const setFilepreviewImage = (e) => {
+  setFileprevImage(URL.createObjectURL(e.target.files[0]));
+};
 
   const upload = async (e) => {
     const formData = new FormData();
     formData.append('file', e.target.files[0]);
     const res = await Api.upload('user/profile', `${user.id}`, formData);
     const impageUpload = await res;
-    //여기서는 잘 받아짐
-    console.log(res)
     setprofileImageFilename(impageUpload);
+    setFilepreviewImage(e)
   }
-
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -54,7 +57,7 @@ function UserEditForm({ user, setIsEditing, setUser }) {
           <Card.Img
             style={{ width: "10rem", height: "8rem" }}
             className="mb-3"
-            src={`${profileImageFilename}`}
+            src={`${fileprevImage}`}
             alt="사용자 등록 프로필 이미지"
           />:
           <Card.Img
