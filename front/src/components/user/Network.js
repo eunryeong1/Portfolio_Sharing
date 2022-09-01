@@ -20,6 +20,19 @@ import UserCard from "./UserCard";
 import { UserStateContext } from "../../App";
 import UserTable from "./UserTable";
 import "./Network.css";
+import styled from "styled-components"
+
+const Text = styled.p`
+  width: 100%;
+  font-weight: bold;
+  font-size: 15px;
+  line-height: 18px;
+  color: #151618;
+  box-shadow: inset 0px -1px 0px #e1e2e4;
+  padding: 12px 0;
+  margin-bottom: 12px;
+`;
+
 function Network() {
   const navigate = useNavigate();
   const userState = useContext(UserStateContext);
@@ -27,6 +40,8 @@ function Network() {
   const [users, setUsers] = useState([]);
   const [search, setSearch] = useState("");
   const [showCard, setShowCard] = useState(true);
+
+  
 
   function toggleShow() {
     setShowCard(!showCard);
@@ -44,6 +59,10 @@ function Network() {
       a.name.localeCompare(b.name)
     );
     setUsers(newUserNameArray);
+  }
+  // 전체 개수 구현
+  function CardCount({count}) {
+    return <Text>전체 {count}개</Text>
   }
 
   useEffect(() => {
@@ -105,6 +124,7 @@ function Network() {
       </Container>
       {showCard ? (
         <Container fixed>
+          <CardCount count={users.filter((data) => {if(data.name.includes(search)) return data}).length} />
           <Row xs="auto" className="justify-content-md-center">
             {users
               .filter((data) => {
@@ -118,9 +138,11 @@ function Network() {
                 return <UserCard key={user.id} user={user} isNetwork />;
               })}
           </Row>
+          
         </Container>
       ) : (
         <Container fixed>
+          <CardCount count={users.filter((data) => {if(data.name.includes(search)) return data}).length} />
           <Table className="network-table justify-content-md-center">
             <thead className="table-header">
               <tr>
@@ -155,7 +177,9 @@ function Network() {
                 return <UserTable key={user.id} user={user} isNetwork />;
               })}
           </Table>
+         
         </Container>
+
       )}
     </>
   );
