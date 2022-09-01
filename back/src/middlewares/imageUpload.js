@@ -1,5 +1,5 @@
-import multer from 'multer';
-import path from 'path';
+import multer from "multer";
+import path from "path";
 
 const upload = multer({
   storage: multer.diskStorage({
@@ -15,8 +15,8 @@ const upload = multer({
       const timestamp = new Date().getTime().valueOf();
       const filename = path.basename(file.originalname, ext) + timestamp + ext;
       callback(null, filename);
-    }
-  })
+    },
+  }),
 });
 
 export { upload };
