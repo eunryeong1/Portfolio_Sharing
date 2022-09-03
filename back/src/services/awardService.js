@@ -3,8 +3,9 @@ import { v4 as uuidv4 } from "uuid";
 
 class awardService {
   static async addAward({ id, awardTitle, awardDetail }) {
-    const award_id = uuidv4();
-    const newAward = { id, award_id, awardTitle, awardDetail };
+    const awardId = uuidv4();
+
+    const newAward = { id, awardId, awardTitle, awardDetail };
 
     // db에 저장
     const createdNewAward = await Award.create({ newAward });
@@ -13,9 +14,10 @@ class awardService {
     return createdNewAward;
   }
 
-  static async setAward({ award_id, toUpdate }) {
+  static async setAward({ awardId, toUpdate }) {
     // 우선 해당 id의 수상 이력 정보가 db에 존재하는지 여부 확인
-    let award = await Award.findById({ award_id });
+    // let award = await Award.findById({ awardId: award_id });
+    let award = await Award.findById({ awardId });
 
     // db에서 찾지 못한 경우, 에러 메시지 반환
     if (!award) {
@@ -28,13 +30,13 @@ class awardService {
     if (toUpdate.awardTitle) {
       const fieldToUpdate = "awardTitle";
       const newValue = toUpdate.awardTitle;
-      award = await Award.update({ award_id, fieldToUpdate, newValue });
+      award = await Award.update({ awardId, fieldToUpdate, newValue });
     }
 
     if (toUpdate.awardDetail) {
       const fieldToUpdate = "awardDetail";
       const newValue = toUpdate.awardDetail;
-      award = await Award.update({ award_id, fieldToUpdate, newValue });
+      award = await Award.update({ awardId, fieldToUpdate, newValue });
     }
 
     return award;
@@ -50,6 +52,18 @@ class awardService {
       return { errorMessage };
     }
 
+    return award;
+  }
+
+  static async deletedAward({ award_id }) {
+    const award = await Award.deleteOne({ award_id });
+
+    // db에서 찾지 못한 경우, 에러 메시지 반환
+    // if (!award) {
+    //   const errorMessage =
+    //     "해당 유저는 수상 이력 정보가 없습니다. 다시 한 번 확인해 주세요.";
+    //   return { errorMessage };
+    // }
     return award;
   }
 }
