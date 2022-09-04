@@ -23,9 +23,9 @@ awardRouter.post("/award/add", login_required, async function (req, res, next) {
       awardDetail,
     });
 
-    if (newAward.errorMessage) {
-      throw new Error(newAward.errorMessage);
-    }
+    // if (newAward.errorMessage) {
+    //   throw new Error(newAward.errorMessage);
+    // }
 
     res.status(201).json(newAward);
   } catch (error) {
@@ -62,9 +62,9 @@ awardRouter.put(
 );
 
 // 현재 사용자의 수상 이력 정보 가져오기
-awardRouter.get("/award", login_required, async function (req, res, next) {
+awardRouter.get("/award/:id", login_required, async function (req, res, next) {
   try {
-    const user_id = req.currentUserId;
+    const user_id = req.params.id;
     const currentAwardInfo = await awardService.getAwardInfo({ user_id });
 
     res.status(200).send(currentAwardInfo);
@@ -72,5 +72,23 @@ awardRouter.get("/award", login_required, async function (req, res, next) {
     next(error);
   }
 });
+
+awardRouter.delete(
+  "/award/:awardId",
+  login_required,
+  async function (req, res, next) {
+    try {
+      const award_id = req.params.awardId;
+      const deletedAward = await awardService.deletedAward({ award_id });
+
+      if (deletedAward.errorMessage) {
+        throw new Error(deletedAward.errorMessage);
+      }
+      res.status(200).json(deletedAward);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
 
 export { awardRouter };

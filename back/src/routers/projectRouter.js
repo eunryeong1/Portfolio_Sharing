@@ -71,15 +71,39 @@ projectRouter.put(
 );
 
 // 현재 사용자의 project 정보 가져오기
-projectRouter.get("/project", login_required, async function (req, res, next) {
-  try {
-    const user_id = req.currentUserId;
-    const currentProjectInfo = await projectService.getProjectInfo({ user_id });
+projectRouter.get(
+  "/project/:id",
+  login_required,
+  async function (req, res, next) {
+    try {
+      const user_id = req.params.id;
+      const currentProjectInfo = await projectService.getProjectInfo({
+        user_id,
+      });
 
-    res.status(200).send(currentProjectInfo);
-  } catch (error) {
-    next(error);
+      res.status(200).send(currentProjectInfo);
+    } catch (error) {
+      next(error);
+    }
   }
-});
+);
+
+projectRouter.delete(
+  "/project/:projId",
+  login_required,
+  async function (req, res, next) {
+    try {
+      const proj_id = req.params.projId;
+      const deletedProject = await projectService.deletedProject({ proj_id });
+
+      if (deletedProject.errorMessage) {
+        throw new Error(deletedProject.errorMessage);
+      }
+      res.status(200).json(deletedProject);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
 
 export { projectRouter };
